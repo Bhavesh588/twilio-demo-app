@@ -75,14 +75,26 @@ export const ChatProvider = ({ children }: any) => {
       chatClient
         .getConversationByUniqueName(room.sid)
         .then(newConversation => {
-          console.log(newConversation)
           //@ts-ignore
           window.chatConversation = newConversation;
           setConversation(newConversation);
         })
         .catch(e => {
-          console.error(e);
-          onError(new Error('There was a problem getting the Conversation associated with this room.'));
+          // console.error(e)
+          // onError(new Error('There was a problem getting the Conversation associated with this room.'));
+          if(e.message === 'Not Found') {
+            chatClient
+            .createConversation()
+            .then(newConversation => {
+              //@ts-ignore
+              window.chatConversation = newConversation;
+              setConversation(newConversation);
+            })
+            .catch(e => {
+              console.error(e)
+              onError(new Error('There was a problem creating the Conversation associated with this room.'));
+            })
+          }
         });
     }
   }, [room, chatClient, onError]);
