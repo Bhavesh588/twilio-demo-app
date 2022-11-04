@@ -55,7 +55,6 @@ export const ChatProvider = ({ children }: any) => {
 
   useEffect(() => {
     if (conversation) {
-      console.log('it here')
       const handleMessageAdded = (message: Message) => setMessages(oldMessages => [...oldMessages, message]);
       conversation.join().then((channel) => console.log('you are joined'))
       conversation.getMessages().then(newMessages => setMessages(newMessages.items));
