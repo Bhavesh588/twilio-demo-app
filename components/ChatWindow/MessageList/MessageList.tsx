@@ -34,7 +34,7 @@ export default function MessageList({ messages }: MessageListProps) {
               <MessageInfo author={message.author!} isLocalParticipant={isLocalParticipant} dateCreated={time} />
             )}
             {message.type === 'text' && <TextMessage body={message.body!} isLocalParticipant={isLocalParticipant} />}
-            {message.type === 'media' && <MediaMessage media={message.attachedMedia![0]} />}
+            {message.type === 'media' && <MediaMessage media={message.media} />}
           </React.Fragment>
         );
       })}

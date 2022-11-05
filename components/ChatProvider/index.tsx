@@ -33,7 +33,7 @@ export const ChatProvider = ({ children }: any) => {
         if (state === 'initialized') {
           // @ts-ignore
           // window.chatClient = client;
-          console.log(client)
+          // console.log(client)
           setChatClient(client);
         } else if (state === 'failed') {
           onError(new Error("There was a problem connecting to Twilio's conversation service."));
@@ -80,12 +80,12 @@ export const ChatProvider = ({ children }: any) => {
   function createOrJoinGeneralChannel() {
     // Get the general chat channel, which is where all the messages are
     // sent in this simple application
-    console.log('Attempting to join "general" chat channel...');
+    console.log("Attempting to join " + room.name + " chat channel...");
     chatClient
-      .getChannelByUniqueName('general')
+      .getChannelByUniqueName(room.name)
       .then(async (newConversation) => {
-        console.log('Found general channel:');
-        console.log(newConversation)
+        console.log("Found " + room.name + " channel:");
+        // console.log(newConversation)
         //@ts-ignore
         // window.chatConversation = newConversation;
         setConversation(newConversation);
@@ -94,21 +94,21 @@ export const ChatProvider = ({ children }: any) => {
         console.error(e)
         // onError(new Error('There was a problem getting the Conversation associated with this room.'));
         if(e.message === 'Not Found') {
-          console.log('Creating general channel:');
+          console.log('Creating ' + room.name + ' channel:');
           chatClient
             .createChannel({
-              uniqueName: "general",
-              friendlyName: "General Chat Channel",
+              uniqueName: room.name,
+              friendlyName: room.name + " Chat Channel",
             })
             .then(async (newConversation) => {
-              console.log('Created general channel:');
-              console.log(newConversation)
+              console.log('Created ' + room.name + ' channel:');
+              // console.log(newConversation)
               //@ts-ignore
               // window.chatConversation = newConversation;
               setConversation(newConversation);
             })
             .catch(e => {
-              console.error(e)
+              // console.error(e)
               onError(new Error('There was a problem creating the Conversation associated with this room.'));
             })
         }
